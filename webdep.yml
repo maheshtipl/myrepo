@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webdep
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: 10.132.66.56:5000/green
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webdep
+spec:
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+  type: NodePort
